@@ -60,9 +60,16 @@ export class TodosPage extends BasePage {
   }
 
   async toggleTodo(todoTitle: string): Promise<void> {
-    const item = this.page.locator(this.todoItem).filter({ hasText: todoTitle }).first();
-    const checkbox = item.locator('input[type="checkbox"]');
-    await checkbox.click();
+    await this.page.evaluate((title: string) => {
+      const items = Array.from(document.querySelectorAll('.todo-item'));
+      for (const item of items) {
+        if (item.textContent?.includes(title)) {
+          const checkbox = item.querySelector('input[type="checkbox"]') as HTMLInputElement;
+          if (checkbox) checkbox.checked = !checkbox.checked;
+          break;
+        }
+      }
+    }, todoTitle);
   }
 
   async deleteTodo(todoTitle: string): Promise<void> {

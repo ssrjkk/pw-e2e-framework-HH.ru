@@ -52,7 +52,7 @@ const todosHTML = (todos = []) => `
   <div class="todo-list">
     ${todos.map(t => `
       <div class="todo-item" data-id="${t.id}">
-        <input type="checkbox" ${t.completed ? 'checked' : ''} />
+        <input type="checkbox" name="completed" ${t.completed ? 'checked' : ''} />
         <span>${t.title}</span>
         <button class="delete">×</button>
       </div>

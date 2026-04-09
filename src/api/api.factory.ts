@@ -12,26 +12,44 @@ export interface IApiFactory {
 }
 
 export class ApiFactory {
-  private baseApi: BaseApi;
+  private _baseApi: BaseApi;
+  private _authApi: AuthApi | null = null;
+  private _usersApi: UsersApi | null = null;
+  private _todosApi: TodosApi | null = null;
 
   constructor(request: APIRequestContext, baseURL: string) {
-    this.baseApi = new BaseApi(request, baseURL);
+    this._baseApi = new BaseApi(request, baseURL);
   }
 
   get auth(): AuthApi {
-    return new AuthApi(this.baseApi.request, this.baseApi.baseURL);
+    if (!this._authApi) {
+      this._authApi = new AuthApi(this._baseApi.request, this._baseApi.baseURL);
+      this._authApi.setToken(this._baseApi.getTokenValue() || '');
+      this._authApi.setParent(this._baseApi);
+    }
+    return this._authApi;
   }
 
   get users(): UsersApi {
-    return new UsersApi(this.baseApi.request, this.baseApi.baseURL);
+    if (!this._usersApi) {
+      this._usersApi = new UsersApi(this._baseApi.request, this._baseApi.baseURL);
+      this._usersApi.setToken(this._baseApi.getTokenValue() || '');
+      this._usersApi.setParent(this._baseApi);
+    }
+    return this._usersApi;
   }
 
   get todos(): TodosApi {
-    return new TodosApi(this.baseApi.request, this.baseApi.baseURL);
+    if (!this._todosApi) {
+      this._todosApi = new TodosApi(this._baseApi.request, this._baseApi.baseURL);
+      this._todosApi.setToken(this._baseApi.getTokenValue() || '');
+      this._todosApi.setParent(this._baseApi);
+    }
+    return this._todosApi;
   }
 
   get base(): BaseApi {
-    return this.baseApi;
+    return this._baseApi;
   }
 }
 

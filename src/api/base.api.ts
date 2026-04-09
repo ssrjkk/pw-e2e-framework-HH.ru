@@ -4,7 +4,8 @@ import { IResponse, IApiError, ApiMethod, IRequestConfig } from '../types/api.ty
 export class BaseApi {
   public request: APIRequestContext;
   public baseURL: string;
-  protected token: string | null = null;
+  protected _token: string | null = null;
+  private parent: BaseApi | null = null;
 
   constructor(request: APIRequestContext, baseURL: string) {
     this.request = request;
@@ -12,11 +13,26 @@ export class BaseApi {
   }
 
   setToken(token: string): void {
-    this.token = token;
+    this._token = token;
+  }
+
+  getToken(): string | null {
+    if (this.parent) {
+      return this.parent.getToken();
+    }
+    return this._token;
+  }
+
+  getTokenValue(): string | null {
+    return this._token;
+  }
+
+  setParent(parent: BaseApi): void {
+    this.parent = parent;
   }
 
   clearToken(): void {
-    this.token = null;
+    this._token = null;
   }
 
   protected getDefaultHeaders(): Record<string, string> {
@@ -24,8 +40,9 @@ export class BaseApi {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-    if (this.token) {
-      headers.Authorization = `Bearer ${this.token}`;
+    const token = this.getToken();
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
     }
     return headers;
   }
