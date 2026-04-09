@@ -36,19 +36,13 @@ interface AuthFixtures {
   authenticatedUser: AuthenticatedUser;
 }
 
-declare global {
-  namespace PlaywrightTest {
-    interface Fixtures extends PageFixtures, ApiFixtures, TestDataFixtures, AuthFixtures {}
-  }
-}
-
 export const testDataFixture = base.extend<TestDataFixtures>({
-  uniqueUser: async ({}, use) => {
+  uniqueUser: async (_params, use) => {
     const user = DataFactory.generateUser();
     await use(user);
   },
 
-  uniqueTodo: async ({}, use) => {
+  uniqueTodo: async (_params, use) => {
     const todo = DataFactory.generateTodo();
     await use(todo);
   },
@@ -106,9 +100,9 @@ export const authFixture = base.extend<AuthFixtures>({
 
 export interface ApiFixtureType {
   api: IApiFactory;
-  apiAuth: ReturnType<typeof import('../api/auth.api').AuthApi.prototype.constructor>;
-  apiUsers: ReturnType<typeof import('../api/users.api').UsersApi.prototype.constructor>;
-  apiTodos: ReturnType<typeof import('../api/todos.api').TodosApi.prototype.constructor>;
+  apiAuth: unknown;
+  apiUsers: unknown;
+  apiTodos: unknown;
 }
 
 export const apiFixture = base.extend<{ api: IApiFactory }>({
