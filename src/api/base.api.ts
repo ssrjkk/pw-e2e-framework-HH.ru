@@ -2,8 +2,8 @@ import { test as base, APIRequestContext, APIResponse } from '@playwright/test';
 import { IResponse, IApiError, ApiMethod, IRequestConfig } from '../types/api.types';
 
 export class BaseApi {
-  protected request: APIRequestContext;
-  protected baseURL: string;
+  public request: APIRequestContext;
+  public baseURL: string;
   protected token: string | null = null;
 
   constructor(request: APIRequestContext, baseURL: string) {
@@ -58,7 +58,7 @@ export class BaseApi {
     const response = await this.request.fetch(url, {
       method: config.method,
       headers: { ...this.getDefaultHeaders(), ...config.headers },
-      body: config.body ? JSON.stringify(config.body) : undefined,
+      data: config.body ? JSON.stringify(config.body) : undefined,
     });
 
     this.logResponse(response);
@@ -128,7 +128,7 @@ export class BaseApi {
     let details: Record<string, unknown> | undefined;
 
     try {
-      const body = response.json();
+      const body = await response.json();
       if (body && typeof body === 'object') {
         message = ((body as Record<string, unknown>).message as string) || message;
         code = ((body as Record<string, unknown>).code as string) || code;
