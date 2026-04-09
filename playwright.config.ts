@@ -1,31 +1,29 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: `.env.${process.env.ENV || 'dev'}` });
 
 export default defineConfig({
-  testDir: "./tests",
+  testDir: './src',
   fullyParallel: true,
-  retries: 1,
-  workers: 2,
-  reporter: [["html", { outputFolder: "playwright-report" }], ["list"]],
-  timeout: 30000,
-
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 2 : undefined,
+  reporter: [['html', { outputFolder: 'playwright-report' }], ['list']],
   use: {
-    baseURL: "https://hh.ru",
-    trace: "on-first-retry",
-    screenshot: "only-on-failure",
-    video: "on-first-retry",
-    extraHTTPHeaders: {
-      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
-    },
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    trace: 'on-first-retry',
+    video: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    actionTimeout: 10000,
+    navigationTimeout: 30000,
   },
-
-  projects: [
-    {
-      name: "chrome",
-      use: { ...devices["Desktop Chrome"] },
-    },
-    {
-      name: "api",
-      testMatch: "**/api/**/*.spec.ts",
-    },
-  ],
+  projects: process.env.BROWSERS
+    ? process.env.BROWSERS.split(',').map((browser) => ({
+        name: browser.trim(),
+        use: { ...devices[browser.trim() as keyof typeof devices] },
+      }))
+    : [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  outputDir: 'test-results',
+  timeout: 30000,
 });
