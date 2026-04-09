@@ -18,11 +18,11 @@ export interface AuthenticatedUser {
   token: string;
 }
 
-interface PageFixtures {
+export interface PageFixtures {
   page: Page;
 }
 
-interface ApiFixtures {
+export interface ApiFixtures {
   request: APIRequestContext;
 }
 
@@ -100,9 +100,8 @@ export const authFixture = base.extend<AuthFixtures>({
 
 export interface ApiFixtureType {
   api: IApiFactory;
-  apiAuth: unknown;
-  apiUsers: unknown;
-  apiTodos: unknown;
+  page: Page;
+  request: APIRequestContext;
 }
 
 export const apiFixture = base.extend<{ api: IApiFactory }>({
