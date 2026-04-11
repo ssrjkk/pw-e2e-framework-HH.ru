@@ -1,5 +1,12 @@
 # E2E Test Framework - Playwright + TypeScript
 
+![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-1.42-green?logo=playwright&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20.x-brightgreen?logo=node.js&logoColor=white)
+![npm](https://img.shields.io/badge/npm-10.x-red?logo=npm&logoColor=white)
+![HTML Report](https://img.shields.io/badge/report-Playwright-ff69b4)
+![CI](https://github.com/ssrjkk/hh-playwright-e2e-framework/actions/workflows/ci.yml/badge.svg)
+
 Фреймворк для тестирования E2E с API layer, Page Objects, CI/CD.
 
 ## Stack
