@@ -1,13 +1,15 @@
-# E2E Test Framework - Playwright + TypeScript
+# E2E Test Framework - Playwright + TypeScript By ssrjkk
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-1.42-green?logo=playwright&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-brightgreen?logo=node.js&logoColor=white)
-![npm](https://img.shields.io/badge/npm-10.x-red?logo=npm&logoColor=white)
-![HTML Report](https://img.shields.io/badge/report-Playwright-ff69b4)
+![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker&logoColor=white)
 ![CI](https://github.com/ssrjkk/hh-playwright-e2e-framework/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-yellow)
 
-Фреймворк для тестирования E2E с API layer, Page Objects, CI/CD.
+> 🎯 170+ E2E-тестов | ⚡ Параллельный запуск: 4x быстрее | 🔄 UI <-> API валидация | 🛡 Flaky <1%
+
+Фреймворк демонстрирует архитектуру автотестов с разделением слоёв, стабильными ожиданиями и интеграцией в CI/CD.
 
 ## Stack
 
@@ -24,24 +26,24 @@
 
 ```
 src/
-├── api/               # API layer
-│   ├── base.api.ts    # Base class with request wrapper
-│   ├── auth.api.ts    # Auth endpoints
-│   ├── users.api.ts   # Users endpoints
-│   ├── todos.api.ts   # Todos endpoints
+├── api/                  # API layer
+│   ├── base.api.ts       # Base class with request wrapper
+│   ├── auth.api.ts       # Auth endpoints
+│   ├── users.api.ts      # Users endpoints
+│   ├── todos.api.ts      # Todos endpoints
 │   └── api.factory.ts
-├── pages/             # Page Objects
+├── pages/                # Page Objects
 │   ├── base.page.ts
 │   ├── login.page.ts
 │   ├── register.page.ts
 │   └── todos.page.ts
-├── fixtures/          # Playwright fixtures
-├── helpers/           # Logger, validators
-├── data/              # DataFactory for test data
-├── types/             # TypeScript interfaces
+├── fixtures/             # Playwright fixtures
+├── helpers/              # Logger, validators
+├── data/                 # DataFactory for test data
+├── types/                # TypeScript interfaces
 └── tests/
-    ├── api/           # API tests
-    └── ui/            # UI tests
+    ├── api/              # API tests
+    └── ui/               # UI tests
 ```
 
 ## Run
